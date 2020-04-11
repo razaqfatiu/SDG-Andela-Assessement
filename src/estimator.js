@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 const covid19ImpactEstimator = (data) => ({
   data: {
     region: {
@@ -13,23 +16,23 @@ const covid19ImpactEstimator = (data) => ({
     totalHospitalBeds: 1380614
   },
   impact: {
-    currentlyInfected: reportedCases * 10,
-    infectionsByRequestedTime: currentlyInfected * (2 ** (Math.floor(timeToElapse / 3))),
+    currentlyInfected: data.reportedCases * 10,
+    infectionsByRequestedTime: currentlyInfected * (2 ** (Math.floor(data.timeToElapse / 3))),
     severeCasesByRequestedTime: 0.15 * infectionsByRequestedTime,
-    hospitalBedsByRequestedTime: totalHospitalBeds * 0.35,
+    hospitalBedsByRequestedTime: data.totalHospitalBeds * 0.35,
     casesForICUByRequestedTime: infectionsByRequestedTime * 0.5,
     casesForVentilatorsByRequestedTime: infectionsByRequestedTime * 0.2,
-    dollarsInFlight: (infectionsByRequestedTime * 0.65 * Math.floor(avgDailyIncomeInUSD)) / 30
+    dollarsInFlight: (infectionsByRequestedTime * 0.65 * Math.floor(data.region.avgDailyIncomeInUSD)) / 30
 
   },
   severeImpact: {
     currentlyInfected: reportedCases * 50,
-    infectionsByRequestedTime: currentlyInfected * (2 ** (Math.floor(timeToElapse / 3))),
+    infectionsByRequestedTime: data.currentlyInfected * (2 ** (Math.floor(data.timeToElapse / 3))),
     severeCasesByRequestedTime: 0.15 * infectionsByRequestedTime,
-    hospitalBedsByRequestedTime: totalHospitalBeds * 0.35,
+    hospitalBedsByRequestedTime: data.totalHospitalBeds * 0.35,
     casesForICUByRequestedTime: infectionsByRequestedTime * 0.5,
     casesForVentilatorsByRequestedTime: infectionsByRequestedTime * 0.2,
-    dollarsInFlight: (infectionsByRequestedTime * 0.65 * Math.floor(avgDailyIncomeInUSD)) / 30
+    dollarsInFlight: (infectionsByRequestedTime * 0.65 * Math.floor(data.region.avgDailyIncomeInUSD)) / 30
 
   }
 });
