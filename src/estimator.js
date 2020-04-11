@@ -17,12 +17,12 @@ const covid19ImpactEstimator = (data) => ({
   },
   impact: {
     currentlyInfected: data.reportedCases * 10,
-    infectionsByRequestedTime: currentlyInfected * (2 ** (Math.floor(data.timeToElapse / 3))),
-    severeCasesByRequestedTime: 0.15 * infectionsByRequestedTime,
+    infectionsByRequestedTime: impact.currentlyInfected * (2 ** (Math.floor(data.timeToElapse / 3))),
+    severeCasesByRequestedTime: 0.15 * impact.infectionsByRequestedTime,
     hospitalBedsByRequestedTime: data.totalHospitalBeds * 0.35,
-    casesForICUByRequestedTime: infectionsByRequestedTime * 0.5,
-    casesForVentilatorsByRequestedTime: infectionsByRequestedTime * 0.2,
-    dollarsInFlight: (infectionsByRequestedTime * 0.65 * Math.floor(data.region.avgDailyIncomeInUSD)) / 30
+    casesForICUByRequestedTime: impact.infectionsByRequestedTime * 0.5,
+    casesForVentilatorsByRequestedTime: impact.infectionsByRequestedTime * 0.2,
+    dollarsInFlight: (impact.infectionsByRequestedTime * 0.65 * Math.floor(data.region.avgDailyIncomeInUSD)) / 30
 
   },
   severeImpact: {
