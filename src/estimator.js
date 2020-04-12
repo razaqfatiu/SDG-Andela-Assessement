@@ -5,14 +5,14 @@ const input = {
   region: {
     name: 'Africa',
     avgAge: 19.7,
-    avgDailyIncomeInUSD: 5,
-    avgDailyIncomePopulation: 0.71
+    avgDailyIncomeInUSD: 4,
+    avgDailyIncomePopulation: 0.73
   },
   periodType: 'days',
-  timeToElapse: 58,
-  reportedCases: 674,
-  population: 66622705,
-  totalHospitalBeds: 1380614
+  timeToElapse: 38,
+  reportedCases: 2747,
+  population: 92931687,
+  totalHospitalBeds: 678874
 };
 
 const covid19ImpactEstimator = (data) => {
@@ -21,18 +21,26 @@ const covid19ImpactEstimator = (data) => {
   const { avgDailyIncomeInUSD } = data.region;
 
   const currentlyInfected = reportedCases * 10;
+  const sCurrentlyInfected = reportedCases * 50;
 
   if (periodType === 'week') {
     timeToElapse *= 7;
   } else if (periodType === 'month') {
     timeToElapse *= 30;
   }
-  const infectionsByRequestedTime = currentlyInfected * (2 ** (Math.floor(data.timeToElapse / 3)));
+  const infectionsByRequestedTime = currentlyInfected * (2 ** (Math.floor(timeToElapse / 3)));
   const severeCasesByRequestedTime = infectionsByRequestedTime * 0.15;
   const hospitalBedsByRequestedTime = totalHospitalBeds * 0.35;
-  const casesForICUByRequestedTime = infectionsByRequestedTime * 0.5;
-  const casesForVentilatorsByRequestedTime = infectionsByRequestedTime * 0.2;
+  const casesForICUByRequestedTime = infectionsByRequestedTime * 0.05;
+  const casesForVentilatorsByRequestedTime = infectionsByRequestedTime * 0.02;
   const dollarsInFlight = (infectionsByRequestedTime * 0.65 * Math.floor(avgDailyIncomeInUSD)) / 30;
+
+  const sInfectionsByRequestedTime = sCurrentlyInfected * (2 ** (Math.floor(timeToElapse / 3)));
+  const sSevereCasesByRequestedTime = sInfectionsByRequestedTime * 0.15;
+  const sHospitalBedsByRequestedTime = totalHospitalBeds * 0.35;
+  const sCasesForICUByRequestedTime = sInfectionsByRequestedTime * 0.05;
+  const sCasesForVentilatorsByRequestedTime = sInfectionsByRequestedTime * 0.02;
+  const sDollarsInFlight = (sInfectionsByRequestedTime * 0.65 * Math.floor(avgDailyIncomeInUSD)) / 30;
 
   return {
     data,
@@ -46,18 +54,18 @@ const covid19ImpactEstimator = (data) => {
       dollarsInFlight
     },
     severeImpact: {
-      currentlyInfected: reportedCases * 50,
-      infectionsByRequestedTime: currentlyInfected * (2 ** (Math.floor(timeToElapse / 3))),
-      severeCasesByRequestedTime: 0.15 * infectionsByRequestedTime,
-      hospitalBedsByRequestedTime: totalHospitalBeds * 0.35,
-      casesForICUByRequestedTime: infectionsByRequestedTime * 0.5,
-      casesForVentilatorsByRequestedTime: infectionsByRequestedTime * 0.2,
-      dollarsInFlight: (infectionsByRequestedTime * 0.65 * Math.floor(avgDailyIncomeInUSD)) / 30
+      currentlyInfected: sCurrentlyInfected,
+      infectionsByRequestedTime: sInfectionsByRequestedTime,
+      severeCasesByRequestedTime: sSevereCasesByRequestedTime,
+      hospitalBedsByRequestedTime: sHospitalBedsByRequestedTime,
+      casesForICUByRequestedTime: sCasesForICUByRequestedTime,
+      casesForVentilatorsByRequestedTime: sCasesForVentilatorsByRequestedTime,
+      dollarsInFlight: sDollarsInFlight
 
     }
   };
 };
 
-// covid19ImpactEstimator(input);
+// console.log(covid19ImpactEstimator(input));
 
 export default covid19ImpactEstimator;
