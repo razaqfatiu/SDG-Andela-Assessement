@@ -66,6 +66,6 @@ const covid19ImpactEstimator = (data) => {
   };
 };
 
-console.log(covid19ImpactEstimator(input));
+// console.log(covid19ImpactEstimator(input));
 
-// export default covid19ImpactEstimator;
+export default covid19ImpactEstimator;
