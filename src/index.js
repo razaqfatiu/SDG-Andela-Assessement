@@ -121,7 +121,7 @@ app.get('/api/v1/on-covid-19/logs', (req, res) => {
 
     let logs;
     try {
-      logs = JSON.parse(data.toString()); // content it's retrieving must be parseable to JSON
+      logs = JSON.parse(data.toString());
     } catch (error) {
       logs = [];
     }
