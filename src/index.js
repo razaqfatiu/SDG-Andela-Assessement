@@ -170,7 +170,7 @@
 const express = require('express');
 const xml2js = require('xml2js');
 const fs = require('fs');
-const { json, urlencoded } = require('body-parser'); // declaring absolute paths before relative paths
+const { json, urlencoded } = require('body-parser');
 const estimator = require('./estimator');
 
 
