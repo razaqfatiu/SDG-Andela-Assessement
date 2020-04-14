@@ -1,0 +1,1 @@
+[{"method":"GET","request":"/api/v1/on-covid-19/logs","status":200,"responseTime":"4ms"}]
